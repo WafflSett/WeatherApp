@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:tool="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:views="clr-namespace:WeatherApp.Views"
+             x:Class="WeatherApp.Pages.MainPage">
+    <ContentPage.Behaviors>
+        <tool:StatusBarBehavior StatusBarColor="{x:StaticResource Primary}"/>
+    </ContentPage.Behaviors>
+    <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Center">
+        <Grid RowDefinitions="Auto,*">
+            <views:LoaderView IsVisible="{Binding IsLoaderVisible}" Grid.RowSpan="2"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 20, 0, 0" Spacing="10" Grid.Row="0">
+                <Label Text="{Binding CityName}" FontSize="35" FontAttributes="Bold"/>
+                <ImageButton Source="{x:StaticResource gpsIcon}" VerticalOptions="Center" WidthRequest="30" HeightRequest="30" Padding="3" Command="{Binding GetLocationCommand}"/>
+            </StackLayout>
+        </Grid>
+        
+    </ScrollView>
+
+</ContentPage>

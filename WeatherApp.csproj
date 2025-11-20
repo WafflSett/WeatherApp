@@ -68,6 +68,9 @@
 	  <MauiXaml Update="Pages\WeeklyWeatherPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="PopUps\LocationInputPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\LoaderView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

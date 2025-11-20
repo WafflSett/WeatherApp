@@ -1,10 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherApp.PopUps;
 
 namespace WeatherApp.ViewModels
 {
@@ -45,7 +47,6 @@ namespace WeatherApp.ViewModels
             }
             IsLoaderVisible = false;
         }
-
         private async Task<string?> GetGeoDecoder(double lat, double lon) {
             IEnumerable<Placemark> placemarks = await Geocoding.GetPlacemarksAsync(lat, lon);
             Placemark? placemark = placemarks.FirstOrDefault();
@@ -54,6 +55,11 @@ namespace WeatherApp.ViewModels
                 return placemark.Locality;
             }
             return null;
+        }
+
+        [RelayCommand]
+        private async Task LocationLblTapped() {
+            await App.Current.MainPage.ShowPopupAsync(new LocationInputPopup());
         }
     }
 }

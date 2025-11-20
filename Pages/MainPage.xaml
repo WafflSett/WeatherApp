@@ -11,7 +11,11 @@
         <Grid RowDefinitions="Auto,*">
             <views:LoaderView IsVisible="{Binding IsLoaderVisible}" Grid.RowSpan="2"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 20, 0, 0" Spacing="10" Grid.Row="0">
-                <Label Text="{Binding CityName}" FontSize="35" FontAttributes="Bold"/>
+                <Label Text="{Binding CityName}" FontSize="35" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LocationLblTappedCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <ImageButton Source="{x:StaticResource gpsIcon}" VerticalOptions="Center" WidthRequest="30" HeightRequest="30" Padding="3" Command="{Binding GetLocationCommand}"/>
             </StackLayout>
         </Grid>

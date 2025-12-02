@@ -3,10 +3,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherApp.Classes;
+using WeatherApp.Models;
 using WeatherApp.PopUps;
+using WeatherApp.Services;
 
 namespace WeatherApp.ViewModels
 {
@@ -16,10 +20,16 @@ namespace WeatherApp.ViewModels
 		Location? locationData;
 
         [ObservableProperty]
-        string cityName = "Location";
+        WeatherRoot? weatherData;
+
+        [ObservableProperty]
+        string cityName = "Tap to set location..";
 
         [ObservableProperty]
         bool isLoaderVisible = false;
+
+        [ObservableProperty]
+        ObservableCollection<Tuple<string, double, string>> hourlyData;
 
         [RelayCommand]
         private async Task GetLocation() {
@@ -47,6 +57,7 @@ namespace WeatherApp.ViewModels
             }
             IsLoaderVisible = false;
         }
+
         private async Task<string?> GetGeoDecoder(double lat, double lon) {
             IEnumerable<Placemark> placemarks = await Geocoding.GetPlacemarksAsync(lat, lon);
             Placemark? placemark = placemarks.FirstOrDefault();
@@ -60,6 +71,16 @@ namespace WeatherApp.ViewModels
         [RelayCommand]
         private async Task LocationLblTapped() {
             await App.Current.MainPage.ShowPopupAsync(new LocationInputPopup());
+        }
+
+        partial void OnLocationDataChanged(Location? value)
+        {
+            WeatherData = Task.Run(async () => await API.GetWeatherData(value.Longitude, value.Latitude)).Result;
+            HourlyData = new ObservableCollection<Tuple<string, double, string>>();
+            for (int i = 0; i < WeatherData.hourly.temperature_2m.Count; i++)
+            {
+                HourlyData.Add(Tuple.Create(WeatherData.hourly.time[i].Split("T").Last(), WeatherData.hourly.temperature_2m[i], WeatherIcons.Icons[WeatherData.hourly.weathercode[i]].Day.image));
+            }
         }
     }
 }

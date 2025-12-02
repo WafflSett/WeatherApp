@@ -1,69 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WeatherApp.Classes;
 
-namespace WeatherApp.Models
+public class CurrentWeather
 {
+    public string time { get; set; }
+    public double interval { get; set; }
+    public double temperature { get; set; }
+    public double windspeed { get; set; }
+    public double winddirection { get; set; }
+    public double is_day { get; set; }
+    public int weathercode { get; set; }
+    public string weatherIconUrl => is_day==1 ? WeatherIcons.Icons[weathercode].Day.image: WeatherIcons.Icons[weathercode].Night.image;
+}
 
-    public class WeatherRoot
-    {
-        public float latitude { get; set; }
-        public float longitude { get; set; }
-        public float generationtime_ms { get; set; }
-        public int utc_offset_seconds { get; set; }
-        public string timezone { get; set; }
-        public string timezone_abbreviation { get; set; }
-        public float elevation { get; set; }
-        public Current_Units current_units { get; set; }
-        public Current current { get; set; }
-        public Hourly_Units hourly_units { get; set; }
-        public Hourly hourly { get; set; }
-    }
+public class CurrentWeatherUnits
+{
+    public string time { get; set; }
+    public string interval { get; set; }
+    public string temperature { get; set; }
+    public string windspeed { get; set; }
+    public string winddirection { get; set; }
+    public string is_day { get; set; }
+    public string weathercode { get; set; }
+}
 
-    public class Current_Units
-    {
-        public string time { get; set; }
-        public string interval { get; set; }
-        public string temperature_2m { get; set; }
-        public string is_day { get; set; }
-        public string precipitation { get; set; }
-        public string weather_code { get; set; }
-        public string apparent_temperature { get; set; }
-    }
+public class Hourly
+{
+    public List<string> time { get; set; }
+    public List<double> temperature_2m { get; set; }
+    public List<int> weathercode { get; set; }
+    public List<double> visibility { get; set; }
+    public List<double> precipitation { get; set; }
+    public List<double> apparent_temperature { get; set; }
+    public List<double> precipitation_probability { get; set; }
+}
 
-    public class Current
-    {
-        public string time { get; set; }
-        public int interval { get; set; }
-        public float temperature_2m { get; set; }
-        public int is_day { get; set; }
-        public float precipitation { get; set; }
-        public int weather_code { get; set; }
-        public float apparent_temperature { get; set; }
-    }
+public class HourlyUnits
+{
+    public string time { get; set; }
+    public string temperature_2m { get; set; }
+    public string weathercode { get; set; }
+    public string visibility { get; set; }
+    public string precipitation { get; set; }
+    public string apparent_temperature { get; set; }
+    public string precipitation_probability { get; set; }
+}
 
-    public class Hourly_Units
-    {
-        public string time { get; set; }
-        public string temperature_2m { get; set; }
-        public string weather_code { get; set; }
-        public string visibility { get; set; }
-        public string precipitation { get; set; }
-        public string apparent_temperature { get; set; }
-        public string precipitation_probability { get; set; }
-    }
-
-    public class Hourly
-    {
-        public string[] time { get; set; }
-        public float[] temperature_2m { get; set; }
-        public int[] weather_code { get; set; }
-        public float[] visibility { get; set; }
-        public float[] precipitation { get; set; }
-        public float[] apparent_temperature { get; set; }
-        public int[] precipitation_probability { get; set; }
-    }
-
+public class WeatherRoot
+{
+    public double latitude { get; set; }
+    public double longitude { get; set; }
+    public double generationtime_ms { get; set; }
+    public double utc_offset_seconds { get; set; }
+    public string timezone { get; set; }
+    public string timezone_abbreviation { get; set; }
+    public double elevation { get; set; }
+    public CurrentWeatherUnits current_weather_units { get; set; }
+    public CurrentWeather current_weather { get; set; }
+    public HourlyUnits hourly_units { get; set; }
+    public Hourly hourly { get; set; }
 }

@@ -8,8 +8,8 @@
         <tool:StatusBarBehavior StatusBarColor="{x:StaticResource Primary}"/>
     </ContentPage.Behaviors>
     <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Center">
-        <Grid RowDefinitions="Auto,*">
-            <views:LoaderView IsVisible="{Binding IsLoaderVisible}" Grid.RowSpan="2"/>
+        <Grid RowDefinitions="Auto,*,3*">
+            <views:LoaderView IsVisible="{Binding IsLoaderVisible}" Grid.RowSpan="5"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Start" Margin="0, 20, 0, 0" Spacing="10" Grid.Row="0">
                 <Label Text="{Binding CityName}" FontSize="35" FontAttributes="Bold">
                     <Label.GestureRecognizers>
@@ -18,6 +18,36 @@
                 </Label>
                 <ImageButton Source="{x:StaticResource gpsIcon}" VerticalOptions="Center" WidthRequest="30" HeightRequest="30" Padding="3" Command="{Binding GetLocationCommand}"/>
             </StackLayout>
+            <StackLayout Grid.Row="1">
+                <Label FontAttributes="Bold" HorizontalOptions="Center" FontSize="30">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding WeatherData.current_weather.temperature}"/>
+                            <Span Text="{Binding WeatherData.current_weather_units.temperature}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Border Stroke="Black" StrokeThickness="1" WidthRequest="50" HeightRequest="50">
+                    <Image>
+                        <Image.Source>
+                            <UriImageSource Uri="{Binding WeatherData.current_weather.weatherIconUrl}"/>
+                        </Image.Source>
+                    </Image>
+                </Border>
+            </StackLayout>
+            <Border Grid.Row="2" VerticalOptions="FillAndExpand" Margin="10">
+                <CollectionView SelectionMode="None" ItemsSource="{Binding HourlyData}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="{Binding Item1}" VerticalOptions="Center"/>
+                                <Label Text="{Binding Item2, StringFormat='{0:#} °C'}" VerticalOptions="Center"/>
+                                <Image Source="{Binding Item3}" VerticalOptions="Center" WidthRequest="15"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
         </Grid>
         
     </ScrollView>

@@ -28,26 +28,24 @@
                     </Label.FormattedText>
                 </Label>
                 <Border Stroke="Black" StrokeThickness="1" WidthRequest="50" HeightRequest="50">
-                    <Image>
+                    <Image HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Aspect="AspectFit">
                         <Image.Source>
                             <UriImageSource Uri="{Binding WeatherData.current_weather.weatherIconUrl}"/>
                         </Image.Source>
                     </Image>
                 </Border>
             </StackLayout>
-            <Border Grid.Row="2" VerticalOptions="FillAndExpand" Margin="10">
-                <CollectionView SelectionMode="None" ItemsSource="{Binding HourlyData}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal" Spacing="10">
-                                <Label Text="{Binding Item1}" VerticalOptions="Center"/>
-                                <Label Text="{Binding Item2, StringFormat='{0:#} °C'}" VerticalOptions="Center"/>
-                                <Image Source="{Binding Item3}" VerticalOptions="Center" WidthRequest="15"/>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Border>
+            <CollectionView Grid.Row="2" VerticalOptions="FillAndExpand" Margin="10" SelectionMode="None" ItemsSource="{Binding HourlyData}" HeightRequest="350">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Spacing="10">
+                            <Label Text="{Binding Item1}" VerticalOptions="Center"/>
+                            <Label Text="{Binding Item2, StringFormat='{0:#} °C'}" VerticalOptions="Center"/>
+                            <Image Source="{Binding Item3}" VerticalOptions="Center" WidthRequest="15"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
         
     </ScrollView>

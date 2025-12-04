@@ -38,6 +38,7 @@ namespace WeatherApp.ViewModels
             {
                 GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
                 LocationData = await Geolocation.Default.GetLocationAsync(request);
+                App.Location = new (LocationData);
                 if (LocationData != null)
                 {
                     CityName = await GetGeoDecoder(LocationData.Latitude, LocationData.Longitude);
@@ -79,7 +80,10 @@ namespace WeatherApp.ViewModels
             HourlyData = new ObservableCollection<Tuple<string, double, string>>();
             for (int i = 0; i < WeatherData.hourly.temperature_2m.Count; i++)
             {
-                HourlyData.Add(Tuple.Create(WeatherData.hourly.time[i].Split("T").Last(), WeatherData.hourly.temperature_2m[i], WeatherIcons.Icons[WeatherData.hourly.weathercode[i]].Day.image));
+                if (DateTime.Parse(weatherData.hourly.time[i]) >= DateTime.Now.AddHours(-1))
+                {   
+                    HourlyData.Add(Tuple.Create(WeatherData.hourly.time[i].Split("T").Last(), WeatherData.hourly.temperature_2m[i], WeatherIcons.Icons[WeatherData.hourly.weathercode[i]].Day.image));
+                }
             }
         }
     }
